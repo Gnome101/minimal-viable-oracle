@@ -4,20 +4,27 @@ const fetch = require("node-fetch");
 
 const { ethers, network } = hre;
 const MINIMUM_DRAW_AMOUNT = 1;
+const API_BASE = "https://deckofcardsapi.com/api";
 
 class CardsError extends Error {}
 
 async function main() {
-  // const contractName = "CardsOracle";
-  // const { chainId } = network.config;
-  // const deployedContractAddress = addresses[chainId][contractName];
-  // const cardsOracle = await ethers.getContractAt(
-  //   contractName,
-  //   deployedContractAddress
-  // );
-  // console.log(await getCards(52, false));
-  console.log(await getCards(52, true));
-  // cardsOracle.on("OracleRequest", (e) => console.log(e, "hallo"));
+  const contractName = "CardsOracle";
+  const { chainId } = network.config;
+  const deployedContractAddress = addresses[chainId][contractName];
+  const cardsOracle = await ethers.getContractAt(
+    contractName,
+    deployedContractAddress
+  );
+
+  cardsOracle.on(
+    "OracleRequest",
+    async (requestId, shuffle, nrOfCards, sender, timestamp) => {
+      const allCardCodesHex = await getCards(nrOfCards, shuffle);
+      let tx = await cardsOracle.fulfillRequest(requestId, allCardCodesHex);
+      await tx.wait();
+    }
+  );
 }
 
 async function getCards(nrOfCards, shuffle) {
@@ -56,7 +63,7 @@ async function getCards(nrOfCards, shuffle) {
 }
 
 async function shuffleDeck(deckId) {
-  return fetch(`https://deckofcardsapi.com/api/deck/${deckId}/shuffle/`)
+  return fetch(`${API_BASE}/deck/${deckId}/shuffle/`)
     .then((response) => response.json())
     .then((data) => {
       const { success, shuffled, remaining } = data;
@@ -69,9 +76,7 @@ async function shuffleDeck(deckId) {
 }
 
 async function drawNCards(action, nrOfCards) {
-  return fetch(
-    `https://deckofcardsapi.com/api/deck/${action}/draw/?count=${nrOfCards}`
-  )
+  return fetch(`${API_BASE}/deck/${action}/draw/?count=${nrOfCards}`)
     .then((response) => response.json())
     .then((data) => {
       const { success, cards, deck_id: deckId } = data;
