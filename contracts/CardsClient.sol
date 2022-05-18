@@ -9,7 +9,9 @@ contract CardsClient is IOracle {
     address payable public oracle;
     bytes2[] public cards;
     uint32 public pendingRequestId;
-        
+
+    event ClientFulfillment(uint32 indexed requestid, bytes2[] cards, address indexed sender, uint256 indexed timestamp); 
+
     modifier onlyOwner {
       require(msg.sender == owner);
       _;
@@ -47,7 +49,8 @@ contract CardsClient is IOracle {
         require(msg.sender == oracle, "Caller is not the oracle");
         require(_requestId == pendingRequestId, "Invalid request id");
 
-        // TODO: event
+        emit ClientFulfillment(_requestId, _cards, msg.sender, block.timestamp);
+
         pendingRequestId = 0;
         cards = _cards;
     }

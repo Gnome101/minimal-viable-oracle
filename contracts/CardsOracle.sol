@@ -11,7 +11,7 @@ contract CardsOracle is IOracle {
     bool public stopped;
     mapping(uint32 => Request) public idToRequest;
 
-    event OracleRequest(uint32 indexed requestid, bool shuffle, address indexed sender, uint256 indexed timestamp); 
+    event OracleRequest(uint32 indexed requestid, bool shuffle, uint8 nrOfCards, address indexed sender, uint256 indexed timestamp); 
     event OracleFulfillment(uint32 indexed requestid, bytes2[] cards, address indexed sender, uint256 indexed timestamp); 
 
     modifier onlyOwner {
@@ -36,7 +36,7 @@ contract CardsOracle is IOracle {
         require(_request.nrOfCards > 0 && _request.cbClient != address(0) && _request.cbSelector != bytes4(0) && !_request.fulfilled, "Input data missing");
         
         idToRequest[requestId] = _request;
-        emit OracleRequest(requestId, _request.shuffle, msg.sender, block.timestamp); 
+        emit OracleRequest(requestId, _request.shuffle, _request.nrOfCards, msg.sender, block.timestamp); 
         return requestId++;
     }
 
