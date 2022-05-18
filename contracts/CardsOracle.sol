@@ -3,7 +3,7 @@ pragma solidity ^0.8.7;
 
 import "./IOracle.sol";
 
-contract CardOracle is IOracle {
+contract CardsOracle is IOracle {
 
     address public owner;
     uint256 public fee;
@@ -11,9 +11,8 @@ contract CardOracle is IOracle {
     bool public stopped;
     mapping(uint32 => Request) public idToRequest;
 
-    event OracleRequest(uint32, bool, address, uint256); 
-    event OracleFulfillment(uint32, bytes2[], address, uint256); 
-    event Log(bytes);
+    event OracleRequest(uint32 indexed requestid, bool shuffle, address indexed sender, uint256 indexed timestamp); 
+    event OracleFulfillment(uint32 indexed requestid, bytes2[] cards, address indexed sender, uint256 indexed timestamp); 
 
     modifier onlyOwner {
       require(msg.sender == owner, "Sender is not owner");
@@ -28,6 +27,7 @@ contract CardOracle is IOracle {
     constructor() {
         owner = msg.sender;
         stopped = false;
+        requestId = 1;
         fee = 0.001 * 10 ** 18; // 0.001 ETH
     }
 

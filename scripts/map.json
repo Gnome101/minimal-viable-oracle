@@ -1,0 +1,10 @@
+{
+  "4": {
+    "CardsOracle": "0x5bb0531a2a25663960685B4bb012307FbAA7e457",
+    "CardsClient": "0x1AE17a7d4EE23Da2A0eC6F4b90b643351CE3D23a"
+  },
+  "31337": {
+    "CardsClient": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+    "CardsOracle": "0x5FbDB2315678afecb367f032d93F642f64180aa3"
+  }
+}

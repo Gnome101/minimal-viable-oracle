@@ -8,7 +8,7 @@ contract CardsClient is IOracle {
     address public owner;
     address payable public oracle;
     bytes2[] public cards;
-    bool public noRequestPending;
+    uint32 public pendingRequestId;
         
     modifier onlyOwner {
       require(msg.sender == owner);
@@ -18,7 +18,6 @@ contract CardsClient is IOracle {
     constructor(address payable _oracle) {
         owner = msg.sender;
         oracle = _oracle;
-        noRequestPending = true;
     }
 
     function drawNCardsWithShuffle(uint8 _nrOfCards) public payable returns (uint32){
@@ -30,25 +29,26 @@ contract CardsClient is IOracle {
     }
 
     function drawNCards(uint8 _nrOfCards, bool shuffle) internal returns (uint32){
-        require(noRequestPending, "There is already a pending request");
-        require(_nrOfCards > 0, "Draw at least one card");
-
-        noRequestPending = false;
+        require(pendingRequestId == 0, "There is already a pending request");
+        require(_nrOfCards > 0 && _nrOfCards < 53, "Draw at least one card"); // A card deck has 52 cards
         
         Request memory request = Request(_nrOfCards, shuffle, address(this), this.fulfill.selector, false);
         (bool success, bytes memory data) = oracle.call{value: msg.value}(abi.encodeWithSignature("receiveRequest((uint8,bool,address,bytes4,bool))", request));
     
         if(!success) {
-            noRequestPending = false;
+            pendingRequestId = 0;
             revert("Call to Oracle was not successful");
         }
        
-        return abi.decode(data, (uint16));
+        return pendingRequestId = abi.decode(data, (uint16));
     }
 
-    function fulfill(uint32 _requestId, bytes2[] calldata _cards) external { // todo id
+    function fulfill(uint32 _requestId, bytes2[] calldata _cards) external {
         require(msg.sender == oracle, "Caller is not the oracle");
-        noRequestPending = true;
+        require(_requestId == pendingRequestId, "Invalid request id");
+
+        // TODO: event
+        pendingRequestId = 0;
         cards = _cards;
     }
 
