@@ -41,6 +41,7 @@ function createAndWritePersistentContractFiles(chainId, contractName, address) {
     }
   });
 }
+
 function createContractDirectory(chainId, contractName, address) {
   fs.mkdir(absoluteDirPath, (err) => {
     if (err) {
@@ -120,6 +121,7 @@ exports.verifyContract = async (contract, args) => {
       constructorArguments: args,
     });
   } catch (err) {
+    console.error("hallo", err);
     if (err.message.includes("Reason: Already Verified")) {
       console.log("Contract is already verified!");
     }

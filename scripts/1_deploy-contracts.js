@@ -21,7 +21,6 @@ async function main() {
 
   await storeContractAddress(cardsOracle, contractName);
   await verifyContract(cardsOracle, []);
-  printEtherscanLink(cardsOracle.address, chainId);
 
   // Deploy CardsClient contract
   contractName = "CardsClient";
@@ -34,7 +33,6 @@ async function main() {
 
   await storeContractAddress(cardsClient, contractName);
   await verifyContract(cardsClient, args);
-  printEtherscanLink(cardsClient.address, chainId);
 }
 
 main().catch((error) => {

@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 require("@nomiclabs/hardhat-waffle");
+require("@nomiclabs/hardhat-etherscan");
 
 const { ETHER_SCAN, ALCHEMY_API_KEY_RINKEBY, PRIVATE_KEY } = process.env;
 

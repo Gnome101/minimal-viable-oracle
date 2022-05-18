@@ -12,12 +12,16 @@ async function main() {
     deployedContractAddress
   );
 
+  // without shuffle (you can change 52 to any number between 1 and 52):
   let tx = await cardsClient.drawNCardsWithoutShuffle(52, {
     value: ethers.utils.parseEther("0.001"),
   });
   await tx.wait();
 
-  // tx = cardsClient.drawNCardsWithShuffle(52);
+  // with shuffle (you can change 52 to any number between 1 and 52):
+  // tx = cardsClient.drawNCardsWithShuffle(52, {
+  //   value: ethers.utils.parseEther("0.001"),
+  // });
   // await tx.wait();
 }
 
