@@ -36,6 +36,7 @@ contract CardsOracle is IOracle {
         require(_request.nrOfCards > 0 && _request.nrOfCards < 53 && _request.cbClient != address(0) && _request.cbSelector != bytes4(0) && !_request.fulfilled, "Invalid input data");
 
         idToRequest[requestId] = _request;
+
         emit OracleRequest(requestId, _request.shuffle, _request.nrOfCards, msg.sender, block.timestamp); 
         return requestId++;
     }
@@ -43,9 +44,9 @@ contract CardsOracle is IOracle {
     function fulfillRequest(uint32 _requestId, bytes2[] calldata _cards) notStopped onlyOwner external {
         Request storage request = idToRequest[_requestId];
 
-        require(request.cbClient != address(0), "No request with this id found");
-        require(_cards.length == request.nrOfCards, "Incorrect number of cards");
-        require(!request.fulfilled, "Request is already fulfilled");
+        assert(request.cbClient != address(0));
+        assert(!request.fulfilled);
+        assert(_cards.length == request.nrOfCards);
 
         request.fulfilled = true;
 

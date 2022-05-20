@@ -38,7 +38,7 @@ async function getCards(nrOfCards, shuffle) {
         MINIMUM_DRAW_AMOUNT
       );
 
-      // 2. draw nrOfCards - 1 cards and reshuffle before every draw
+      // 2. draw nrOfCards-1 cards and reshuffle before every draw
       for (let i = MINIMUM_DRAW_AMOUNT; nrOfCards > i; i++) {
         await shuffleDeck(deckId);
         const { cardCodesHex } = await drawNCards(deckId, 1);
