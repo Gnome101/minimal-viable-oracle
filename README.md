@@ -21,7 +21,7 @@ The `2_listen-to-oracle-requests.js` must run in order to respond to the request
 
 The script will draw 52 cards in one go (and without reshuffling after every request). You can change this behavior if you want. Make sure you have some testnet Ether in you wallet, since every send 0.001 ETH to the oracle.
 
-### Draw 52 cards from the same deck without shuffling in between (each card appears once)
+<!-- ### Draw 52 cards from the same deck without shuffling in between (each card appears once)
 
 ```javascript
 [
@@ -137,4 +137,4 @@ The script will draw 52 cards in one go (and without reshuffling after every req
   "0x3648",
   "0x3253",
 ];
-```
+``` -->
