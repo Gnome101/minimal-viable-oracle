@@ -32,13 +32,11 @@ contract CardsClient is IOracle {
 
     function drawNCards(uint8 _nrOfCards, bool shuffle) internal returns (uint32){
         require(pendingRequestId == 0, "There is already a pending request");
-        require(_nrOfCards > 0 && _nrOfCards < 53, "Draw at least one card"); // A card deck has 52 cards
         
         Request memory request = Request(_nrOfCards, shuffle, address(this), this.fulfill.selector, false);
         (bool success, bytes memory data) = oracle.call{value: msg.value}(abi.encodeWithSignature("receiveRequest((uint8,bool,address,bytes4,bool))", request));
     
         if(!success) {
-            pendingRequestId = 0;
             revert("Call to Oracle was not successful");
         }
        
@@ -47,7 +45,7 @@ contract CardsClient is IOracle {
 
     function fulfill(uint32 _requestId, bytes2[] calldata _cards) external {
         require(msg.sender == oracle, "Caller is not the oracle");
-        require(_requestId == pendingRequestId, "Invalid request id");
+        assert(_requestId == pendingRequestId);
 
         emit ClientFulfillment(_requestId, _cards, msg.sender, block.timestamp);
 

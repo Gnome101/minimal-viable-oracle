@@ -33,8 +33,8 @@ contract CardsOracle is IOracle {
 
     function receiveRequest(Request calldata _request) external payable notStopped returns (uint32){
         require(msg.value >= fee, "Please send more ETH");
-        require(_request.nrOfCards > 0 && _request.cbClient != address(0) && _request.cbSelector != bytes4(0) && !_request.fulfilled, "Input data missing");
-        
+        require(_request.nrOfCards > 0 && _request.nrOfCards < 53 && _request.cbClient != address(0) && _request.cbSelector != bytes4(0) && !_request.fulfilled, "Invalid input data");
+
         idToRequest[requestId] = _request;
         emit OracleRequest(requestId, _request.shuffle, _request.nrOfCards, msg.sender, block.timestamp); 
         return requestId++;
