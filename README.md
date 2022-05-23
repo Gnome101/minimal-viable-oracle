@@ -1,14 +1,18 @@
 <!--
-  Title: Minimal Viable Oracle (MVO)
+  Title: Minimal Viable Oracle (MVO) - An effective way to Build your own oracle with Solidity
   Description: Connect your Ethereum smart contract to any real world API using the oracle pattern!
   Author: @noahliechti
   -->
 
-# Minimal Viable Oracle (MVO)
+# Minimal Viable Oracle (MVO) - An effective way to Build your own oracle with Solidity
 
 [![Licence](https://img.shields.io/github/license/noahliechti/minimal-viable-oracle?style=social)](https://github.com/noahliechti/minimal-viable-oracle/blob/main/LICENSE)
 [![Tweet](https://img.shields.io/twitter/url/https/github.com/jonsn0w/hyde.svg?style=social)](http://twitter.com/intent/tweet?text=Check%20out%20%40noahliechti%27s%20Minimal%20Viable%20Oracle%20%28MVO%29.%20A%20way%20to%20connect%20your%20Ethereum%20smart%20contract%20to%20any%20real%20world%20API%20using%20the%20oracle%20pattern%21&url=https://github.com/noahliechti/minimal-viable-oracle)
 [![Fork](https://img.shields.io/github/forks/noahliechti/minimal-viable-oracle?style=social)](https://github.com/noahliechti/minimal-viable-oracle/fork)
+
+Smart contracts cannot access off-chain data directly. This repository demonstrates how to connect Ethereum to any real world API using the oracle pattern.
+
+Check out the associate blog post [here](https://noahliechti.hashnode.dev/an-effective-way-to-build-your-own-oracle-with-solidity).
 
 > This project is only tested on macOS
 
@@ -31,120 +35,6 @@ The `2_listen-to-oracle-requests.js` must run in order to respond to the request
 
 The script will draw 52 cards in one go (and without reshuffling after every request). You can change this behavior if you want. Make sure you have some testnet Ether in you wallet, since every every request sends 0.001 ETH to the oracle.
 
-<!-- ### Draw 52 cards from the same deck without shuffling in between (each card appears once)
+---
 
-```javascript
-[
-  "0x3748",
-  "0x4b43",
-  "0x3448",
-  "0x5143",
-  "0x4b48",
-  "0x3348",
-  "0x4b44",
-  "0x4148",
-  "0x4144",
-  "0x3048",
-  "0x3244",
-  "0x3753",
-  "0x5144",
-  "0x4143",
-  "0x3844",
-  "0x4a53",
-  "0x3648",
-  "0x5148",
-  "0x3948",
-  "0x4153",
-  "0x3543",
-  "0x3043",
-  "0x3453",
-  "0x3544",
-  "0x3943",
-  "0x3443",
-  "0x3344",
-  "0x3553",
-  "0x4a48",
-  "0x3653",
-  "0x5153",
-  "0x3848",
-  "0x3243",
-  "0x3548",
-  "0x3744",
-  "0x3053",
-  "0x3253",
-  "0x3853",
-  "0x3843",
-  "0x3953",
-  "0x4a43",
-  "0x3644",
-  "0x3444",
-  "0x4b53",
-  "0x4a44",
-  "0x3248",
-  "0x3044",
-  "0x3643",
-  "0x3353",
-  "0x3343",
-  "0x3944",
-  "0x3743",
-];
-```
-
-### Draw 52 cards and reshuffle after every draw (there can be duplicates)
-
-```javascript
-[
-  "0x3653",
-  "0x3843",
-  "0x3348",
-  "0x5148",
-  "0x4a44",
-  "0x3444",
-  "0x3443",
-  "0x5153",
-  "0x4a53",
-  "0x5153",
-  "0x3844",
-  "0x5153",
-  "0x3243",
-  "0x4a53",
-  "0x5143",
-  "0x3543",
-  "0x3553",
-  "0x5144",
-  "0x5144",
-  "0x3053",
-  "0x3253",
-  "0x4b48",
-  "0x3443",
-  "0x3844",
-  "0x3843",
-  "0x3653",
-  "0x3843",
-  "0x3353",
-  "0x3553",
-  "0x5148",
-  "0x3853",
-  "0x3244",
-  "0x3244",
-  "0x4a43",
-  "0x5143",
-  "0x4143",
-  "0x4b48",
-  "0x4a48",
-  "0x3348",
-  "0x3044",
-  "0x3748",
-  "0x5144",
-  "0x3253",
-  "0x3944",
-  "0x3653",
-  "0x5153",
-  "0x4b48",
-  "0x4148",
-  "0x3453",
-  "0x5148",
-  "0x3648",
-  "0x3253",
-];
-``` -->
+Disclaimer: This code has not been professionally audited. Use at your own risk. Also keep in mind that centralized oracles are a point of failure. Always use decentralized oracles if possible.
